@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #454545;
+  --color-secondary: #ededed;
+  --color-button: #21292b;
+  --color-stroke: #d7d7d7;
+  --color-bg: #f8f8f8;
+  --color-text: #000000;
+  --color-text-muted: #7f7f7f;
+  --color-brand: #3b82f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at 0% 0%, #ffffff 0%, #f3f3f3 55%, #ececec 100%);
+}
