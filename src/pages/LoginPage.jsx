@@ -1,40 +1,73 @@
+import { useState } from 'react'
 import CarLogo from '../components/shared/CarLogo'
 import Field from '../components/shared/Field'
+import PasswordField from '../components/shared/PasswordField'
+import SocialProviderButtons, { SocialDivider } from '../components/shared/SocialProviderButtons'
 
 export default function LoginPage({ onForgotPassword, onLogin, onCreateAccount }) {
+  const [emailOrPhone, setEmailOrPhone] = useState('')
+  const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(true)
+
+  const handleLogin = () => {
+    if (!emailOrPhone.trim() || !password.trim()) {
+      alert('Por favor, completa todos los campos para iniciar sesion.')
+      return
+    }
+
+    onLogin()
+  }
+
   return (
     <section className="flex flex-1 flex-col p-5">
       <div className="mt-6">
         <CarLogo />
       </div>
 
-      <h2 className="mt-10 text-4xl font-semibold leading-[1.1] text-[#151515]">
+      <h2 className="mt-10 text-[30px] font-semibold leading-[1.12] text-[#151515]">
         Bienvenido de nuevo.
         <br />
         Listo para salir a la carretera.
       </h2>
 
       <div className="mt-8 space-y-3">
-        <Field placeholder="Correo electronico/Numero de telefono" />
-        <Field placeholder="Contrasena" type="password" />
+        <Field
+          placeholder="Correo electronico/Numero de telefono"
+          value={emailOrPhone}
+          onChange={(event) => setEmailOrPhone(event.target.value)}
+        />
+        <PasswordField
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          placeholder={'Contrase\u00F1a'}
+          showAriaLabel={'Mostrar contrase\u00F1a'}
+          hideAriaLabel={'Ocultar contrase\u00F1a'}
+        />
       </div>
 
       <div className="mt-4 flex items-center justify-between text-sm text-[#7b7b7b]">
-        <span className="flex items-center gap-2">
-          <span className="grid size-5 place-content-center rounded-md bg-[#4c4c4c] text-xs text-white">
-            ✓
+        <label className="flex cursor-pointer items-center gap-2">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(event) => setRememberMe(event.target.checked)}
+            className="peer sr-only"
+          />
+          <span className="grid size-5 place-content-center rounded-md border border-[#8d8d8d] bg-white text-xs text-white transition peer-checked:border-[#4c4c4c] peer-checked:bg-[#4c4c4c]">
+            {rememberMe ? '\u2713' : ''}
           </span>
-          Recordarme contrasena
-        </span>
-        <button type="button" onClick={onForgotPassword}>
-          Olvide mi contrasena
+          <span className="text-sm font-normal text-[#7b7b7b]">{'Recordarme contrase\u00F1a'}</span>
+        </label>
+
+        <button type="button" onClick={onForgotPassword} className="!text-[14px] !font-normal text-[#7b7b7b]">
+          {'Olvide mi contrase\u00F1a'}
         </button>
       </div>
 
       <button
         type="button"
-        onClick={onLogin}
-        className="mt-6 h-14 rounded-full bg-[#1f2a30] text-xl font-semibold text-white"
+        onClick={handleLogin}
+        className="mt-6 h-14 rounded-full bg-[#1f2a30] text-[18px] font-bold text-white"
       >
         Iniciar sesion
       </button>
@@ -42,23 +75,13 @@ export default function LoginPage({ onForgotPassword, onLogin, onCreateAccount }
       <button
         type="button"
         onClick={onCreateAccount}
-        className="mt-4 h-14 rounded-full border border-[#8a8a8a] text-xl font-semibold text-[#151515]"
+        className="mt-4 h-14 rounded-full border border-[#8a8a8a] text-[18px] font-bold text-[#151515]"
       >
         Crear cuenta
       </button>
 
-      <div className="my-6 flex items-center gap-4 text-[#8f8f8f]">
-        <span className="h-px flex-1 bg-[#d3d3d3]" />
-        <span className="text-xl">o</span>
-        <span className="h-px flex-1 bg-[#d3d3d3]" />
-      </div>
-
-      <button type="button" className="h-12 rounded-full border border-[#d7d7d7] text-base font-semibold">
-        Apple pay
-      </button>
-      <button type="button" className="mt-3 h-12 rounded-full border border-[#d7d7d7] text-base font-semibold">
-        Google Pay
-      </button>
+      <SocialDivider text="o" />
+      <SocialProviderButtons />
 
       <p className="mt-auto pb-4 text-center text-sm text-[#7b7b7b]">
         No tienes cuenta? Crear cuenta.

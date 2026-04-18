@@ -27,6 +27,7 @@ export default function CarCard({
   isFavorite,
   onToggleFavorite,
   onSelect,
+  onReserveNow,
 }) {
   return (
     <article
@@ -87,8 +88,11 @@ export default function CarCard({
 
           <button
             type="button"
-            onClick={(event) => event.stopPropagation()}
-            className="h-9 rounded-full bg-[#1f2a30] px-4 text-[12px] font-medium text-white"
+            onClick={(event) => {
+              event.stopPropagation()
+              onReserveNow?.()
+            }}
+            className="h-9 rounded-full bg-[#1f2a30] px-4 !text-[12px] !font-medium text-white"
           >
             Reservar ahora
           </button>

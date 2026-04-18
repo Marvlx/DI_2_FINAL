@@ -1,15 +1,14 @@
-import Navbar from '../layout/Navbar'
+import AppHeader from '../shared/AppHeader'
 import Input from '../ui/Input'
 import CarCard from '../ui/CarCard'
 import CategoryPill from '../ui/CategoryPill'
-import BackIcon from '../shared/BackIcon'
-import DotMenu from '../shared/DotMenu'
-import btnFiltro from '../../assets/btn_filtro.svg'
+import FilterButton from '../shared/FilterButton'
 
 export default function BrowseSearchTab({
   query,
   onQueryChange,
   onBackToHomeTab,
+  onOpenFilter,
   activeBrand,
   onChangeBrand,
   carBrands,
@@ -19,29 +18,11 @@ export default function BrowseSearchTab({
   favorites,
   onToggleFavorite,
   onOpenCar,
+  onReserveCar,
 }) {
   return (
     <>
-      <Navbar
-        title="Buscar"
-        leftContent={
-          <button
-            type="button"
-            onClick={onBackToHomeTab}
-            className="grid size-10 place-content-center rounded-full border border-[#d0d0d0] bg-white"
-          >
-            <BackIcon />
-          </button>
-        }
-        rightContent={
-          <button
-            type="button"
-            className="grid size-10 place-content-center rounded-full border border-[#d0d0d0] bg-white"
-          >
-            <DotMenu />
-          </button>
-        }
-      />
+      <AppHeader title="Buscar" onBack={onBackToHomeTab} />
 
       <section className="flex-1 p-5 lg:p-7">
         <div className="flex items-center gap-3">
@@ -52,16 +33,7 @@ export default function BrowseSearchTab({
               placeholder="Busca el coche de tus suenos"
             />
           </div>
-          <button
-            type="button"
-            className="grid size-11 place-content-center rounded-full border border-[#d0d0d0] bg-white"
-          >
-            <img
-              src={btnFiltro}
-              alt="Filtrar"
-              className="size-5 object-contain"
-            />
-          </button>
+          <FilterButton onClick={onOpenFilter} />
         </div>
 
         <div className="mt-4">
@@ -79,7 +51,7 @@ export default function BrowseSearchTab({
         </div>
 
         <div className="mt-2 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">Recomendado para ti</h2>
+          <h2 className="text-[18px] font-bold">Recomendado para ti</h2>
           <span className="text-sm text-[#6f6f6f]">ver todos</span>
         </div>
 
@@ -98,6 +70,7 @@ export default function BrowseSearchTab({
                 isFavorite={favorites.has(car.id)}
                 onToggleFavorite={() => onToggleFavorite(car.id)}
                 onSelect={() => onOpenCar(car)}
+                onReserveNow={() => onReserveCar(car)}
               />
             ))}
           </div>

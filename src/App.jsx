@@ -33,7 +33,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [pickupDate, setPickupDate] = useState('2026-03-18')
   const [dropoffDate, setDropoffDate] = useState('2026-03-21')
-  const [paymentMethod, setPaymentMethod] = useState('Tarjeta')
+  const [paymentMethod, setPaymentMethod] = useState('Efectivo')
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('carsrent:favorites')
     if (!saved) return new Set()
@@ -89,9 +89,21 @@ function App() {
     setScreen('detail')
   }
 
+  const reserveCar = (car) => {
+    setSelectedCar(car)
+    setScreen('reservation')
+  }
+
   const startBrowsing = () => {
     setScreen('browse')
     setActiveTab('home')
+  }
+  const goToLogin = () => setScreen('login')
+  const goToRegister = () => setScreen('register')
+
+  const goToSearchResults = () => {
+    setScreen('browse')
+    setActiveTab('search')
   }
 
   const onTabChange = (tab) => {
@@ -116,114 +128,107 @@ function App() {
     setActiveBrand(brand)
   }
 
+  const screenContent = {
+    welcome: <WelcomePage onStart={goToLogin} />,
+    login: (
+      <LoginPage
+        onForgotPassword={() => setScreen('recover')}
+        onLogin={startBrowsing}
+        onCreateAccount={goToRegister}
+      />
+    ),
+    register: (
+      <RegisterPage
+        onRegister={startBrowsing}
+        onLogin={goToLogin}
+      />
+    ),
+    recover: (
+      <RecoverPage
+        onContinue={goToLogin}
+        onBackToLogin={goToLogin}
+        onCreateNewAccount={goToRegister}
+      />
+    ),
+    browse: (
+      <BrowsePage
+        activeTab={activeTab}
+        onTabChange={onTabChange}
+        query={query}
+        onQueryChange={onQueryChange}
+        carBrands={carBrands}
+        brandLogos={brandLogos}
+        isLoading={isLoading}
+        homeCars={homeCars}
+        nearestCar={nearestCar}
+        visibleCars={visibleCars}
+        favorites={favorites}
+        onToggleFavorite={toggleFavorite}
+        onOpenCar={openCar}
+        onReserveCar={reserveCar}
+        activeBrand={activeBrand}
+        onChangeBrand={onChangeBrand}
+        pickupDate={pickupDate}
+        onLogout={goToLogin}
+      />
+    ),
+    detail: (
+      <DetailPage
+        selectedCar={selectedCar}
+        onBack={goToSearchResults}
+        onReserveNow={() => setScreen('reservation')}
+      />
+    ),
+    reservation: (
+      <ReservationPage
+        pickupDate={pickupDate}
+        dropoffDate={dropoffDate}
+        onPickupDateChange={setPickupDate}
+        onDropoffDateChange={setDropoffDate}
+        onBack={() => setScreen('detail')}
+        onPayNow={() => setScreen('payment')}
+      />
+    ),
+    payment: (
+      <PaymentPage
+        paymentMethod={paymentMethod}
+        onPaymentMethodChange={setPaymentMethod}
+        onBack={() => setScreen('reservation')}
+        onContinue={() => setScreen('confirm')}
+      />
+    ),
+    confirm: (
+      <ConfirmPage
+        selectedCar={selectedCar}
+        pickupDate={pickupDate}
+        dropoffDate={dropoffDate}
+        onBack={() => setScreen('payment')}
+        onConfirm={() => setScreen('success')}
+      />
+    ),
+    success: (
+      <SuccessPage
+        selectedCar={selectedCar}
+        pickupDate={pickupDate}
+        dropoffDate={dropoffDate}
+        paymentMethod={paymentMethod}
+        onBack={() => setScreen('confirm')}
+        onGoHome={startBrowsing}
+      />
+    ),
+    history: (
+      <HistoryPage
+        selectedCar={selectedCar}
+        onBack={startBrowsing}
+        onGoHome={startBrowsing}
+      />
+    ),
+  }
+
   return (
     <div className="min-h-screen bg-[#ececec]">
       <main className="flex min-h-screen w-full flex-col overflow-hidden bg-[#f4f4f4]">
-        {screen === 'welcome' ? <WelcomePage onStart={() => setScreen('login')} /> : null}
-
-        {screen === 'login' ? (
-          <LoginPage
-            onForgotPassword={() => setScreen('recover')}
-            onLogin={startBrowsing}
-            onCreateAccount={() => setScreen('register')}
-          />
-        ) : null}
-
-        {screen === 'register' ? (
-          <RegisterPage
-            onRegister={startBrowsing}
-            onLogin={() => setScreen('login')}
-          />
-        ) : null}
-
-        {screen === 'recover' ? (
-          <RecoverPage
-            onContinue={() => setScreen('login')}
-            onBackToLogin={() => setScreen('login')}
-            onCreateNewAccount={() => setScreen('register')}
-          />
-        ) : null}
-
-        {screen === 'browse' ? (
-          <BrowsePage
-            activeTab={activeTab}
-            onTabChange={onTabChange}
-            query={query}
-            onQueryChange={onQueryChange}
-            carBrands={carBrands}
-            brandLogos={brandLogos}
-            isLoading={isLoading}
-            homeCars={homeCars}
-            nearestCar={nearestCar}
-            visibleCars={visibleCars}
-            favorites={favorites}
-            onToggleFavorite={toggleFavorite}
-            onOpenCar={openCar}
-            activeBrand={activeBrand}
-            onChangeBrand={onChangeBrand}
-            pickupDate={pickupDate}
-            onLogout={() => setScreen('login')}
-          />
-        ) : null}
-
-        {screen === 'detail' ? (
-          <DetailPage
-            selectedCar={selectedCar}
-            onBack={() => {
-              setScreen('browse')
-              setActiveTab('search')
-            }}
-            onReserveNow={() => setScreen('reservation')}
-          />
-        ) : null}
-
-        {screen === 'reservation' ? (
-          <ReservationPage
-            pickupDate={pickupDate}
-            dropoffDate={dropoffDate}
-            onPickupDateChange={setPickupDate}
-            onDropoffDateChange={setDropoffDate}
-            onBack={() => setScreen('detail')}
-            onPayNow={() => setScreen('payment')}
-          />
-        ) : null}
-
-        {screen === 'payment' ? (
-          <PaymentPage
-            paymentMethod={paymentMethod}
-            onPaymentMethodChange={setPaymentMethod}
-            onBack={() => setScreen('reservation')}
-            onContinue={() => setScreen('confirm')}
-          />
-        ) : null}
-
-        {screen === 'confirm' ? (
-          <ConfirmPage
-            selectedCar={selectedCar}
-            pickupDate={pickupDate}
-            dropoffDate={dropoffDate}
-            onBack={() => setScreen('payment')}
-            onConfirm={() => setScreen('success')}
-          />
-        ) : null}
-
-        {screen === 'success' ? (
-          <SuccessPage
-            selectedCar={selectedCar}
-            pickupDate={pickupDate}
-            paymentMethod={paymentMethod}
-            onBack={() => setScreen('confirm')}
-            onGoHome={() => setScreen('history')}
-          />
-        ) : null}
-
-        {screen === 'history' ? (
-          <HistoryPage
-            selectedCar={selectedCar}
-            onBack={startBrowsing}
-            onGoHome={startBrowsing}
-          />
-        ) : null}
+        {screenContent[screen] ?? null}
       </main>
     </div>
   )

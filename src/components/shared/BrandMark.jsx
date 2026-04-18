@@ -10,7 +10,7 @@ export default function BrandMark({ label, logoSrc }) {
           </span>
         )}
       </div>
-      <span className="text-xs text-[#6f6f6f]">{label}</span>
+      <span className="text-[12px] leading-none text-[#6f6f6f]">{label}</span>
     </div>
   )
 }

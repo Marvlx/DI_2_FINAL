@@ -2,12 +2,13 @@ import Input from '../ui/Input'
 import CarCard from '../ui/CarCard'
 import CarLogo from '../shared/CarLogo'
 import BrandMark from '../shared/BrandMark'
-import btnFiltro from '../../assets/btn_filtro.svg'
+import FilterButton from '../shared/FilterButton'
 
 export default function BrowseHomeTab({
   query,
   onQueryChange,
   onOpenSearchTab,
+  onOpenFilter,
   carBrands,
   brandLogos,
   isLoading,
@@ -16,6 +17,7 @@ export default function BrowseHomeTab({
   favorites,
   onToggleFavorite,
   onOpenCar,
+  onReserveCar,
 }) {
   return (
     <section className="flex flex-1 flex-col p-5 lg:p-7">
@@ -31,16 +33,10 @@ export default function BrowseHomeTab({
             placeholder="Busca el coche de tus suenos"
           />
         </div>
-        <button type="button" className="grid size-11 place-content-center rounded-full border border-[#d0d0d0] bg-white">
-          <img
-            src={btnFiltro}
-            alt="Filtrar"
-            className="size-5 object-contain"
-          />
-        </button>
+        <FilterButton onClick={onOpenFilter} />
       </div>
 
-      <h3 className="mt-6 text-xl font-semibold text-[#1d1d1d]">Marcas</h3>
+      <h3 className="mt-6 text-[18px] font-bold text-[#1d1d1d]">Marcas</h3>
       <div className="mt-4 grid grid-cols-4 gap-2">
         {carBrands.slice(1).map((brand) => (
           <BrandMark key={brand} label={brand} logoSrc={brandLogos[brand]} />
@@ -48,8 +44,8 @@ export default function BrowseHomeTab({
       </div>
 
       <div className="mt-8 flex items-center justify-between">
-        <h3 className="text-2xl font-semibold">Mejores coches</h3>
-        <button type="button" onClick={onOpenSearchTab} className="text-sm text-[#6f6f6f]">
+        <h3 className="text-[18px] font-bold">Mejores coches</h3>
+        <button type="button" onClick={onOpenSearchTab} className="!text-[14px] !font-normal text-[#6f6f6f]">
           Ver todos
         </button>
       </div>
@@ -69,14 +65,15 @@ export default function BrowseHomeTab({
               isFavorite={favorites.has(car.id)}
               onToggleFavorite={() => onToggleFavorite(car.id)}
               onSelect={() => onOpenCar(car)}
+              onReserveNow={() => onReserveCar(car)}
             />
           ))}
         </div>
       )}
 
       <div className="mt-8 flex items-center justify-between">
-        <h3 className="text-2xl font-semibold text-[#1d1d1d]">Opcion mas cercana</h3>
-        <button type="button" className="text-sm text-[#6f6f6f]">
+        <h3 className="text-[18px] font-bold text-[#1d1d1d]">Opcion mas cercana</h3>
+        <button type="button" className="!text-[14px] !font-normal text-[#6f6f6f]">
           ver todo
         </button>
       </div>

@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import BottomNavigation from '../components/layout/BottomNavigation'
 import BrowseHomeTab from '../components/browse/BrowseHomeTab'
 import BrowseSearchTab from '../components/browse/BrowseSearchTab'
 import BrowseAlertsTab from '../components/browse/BrowseAlertsTab'
 import BrowseProfileTab from '../components/browse/BrowseProfileTab'
+import FilterDrawer from '../components/filters/FilterDrawer'
 
 export default function BrowsePage({
   activeTab,
@@ -18,11 +20,14 @@ export default function BrowsePage({
   favorites,
   onToggleFavorite,
   onOpenCar,
+  onReserveCar,
   activeBrand,
   onChangeBrand,
   pickupDate,
   onLogout,
 }) {
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+
   return (
     <>
       {activeTab === 'home' ? (
@@ -30,6 +35,7 @@ export default function BrowsePage({
           query={query}
           onQueryChange={onQueryChange}
           onOpenSearchTab={() => onTabChange('search')}
+          onOpenFilter={() => setIsFilterOpen(true)}
           carBrands={carBrands}
           brandLogos={brandLogos}
           isLoading={isLoading}
@@ -38,6 +44,7 @@ export default function BrowsePage({
           favorites={favorites}
           onToggleFavorite={onToggleFavorite}
           onOpenCar={onOpenCar}
+          onReserveCar={onReserveCar}
         />
       ) : null}
 
@@ -46,6 +53,7 @@ export default function BrowsePage({
           query={query}
           onQueryChange={onQueryChange}
           onBackToHomeTab={() => onTabChange('home')}
+          onOpenFilter={() => setIsFilterOpen(true)}
           activeBrand={activeBrand}
           onChangeBrand={onChangeBrand}
           carBrands={carBrands}
@@ -55,6 +63,7 @@ export default function BrowsePage({
           favorites={favorites}
           onToggleFavorite={onToggleFavorite}
           onOpenCar={onOpenCar}
+          onReserveCar={onReserveCar}
         />
       ) : null}
 
@@ -65,6 +74,8 @@ export default function BrowsePage({
       {activeTab === 'profile' ? (
         <BrowseProfileTab onLogout={onLogout} />
       ) : null}
+
+      <FilterDrawer isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
 
       <BottomNavigation active={activeTab} onChange={onTabChange} />
     </>

@@ -8,7 +8,7 @@ export default function RecoverPage({ onContinue, onBackToLogin, onCreateNewAcco
         <CarLogo />
       </div>
 
-      <h2 className="mt-36 text-center text-4xl font-semibold">Restablecer Contrasena</h2>
+      <h2 className="mt-36 text-center text-[30px] font-semibold">Restablecer Contrasena</h2>
       <p className="mt-3 text-center text-sm text-[#8f8f8f]">
         Ingrese la direccion de correo asociada a su cuenta y le enviaremos un enlace.
       </p>
@@ -17,7 +17,7 @@ export default function RecoverPage({ onContinue, onBackToLogin, onCreateNewAcco
         <Field placeholder="Correo electronico" />
       </div>
 
-      <button type="button" onClick={onContinue} className="mt-6 h-14 rounded-full bg-[#1f2a30] text-xl font-semibold text-white">
+      <button type="button" onClick={onContinue} className="mt-6 h-14 rounded-full bg-[#1f2a30] text-[18px] font-bold text-white">
         Continuar
       </button>
       <button type="button" onClick={onBackToLogin} className="mt-5 text-center text-[#6f6f6f]">

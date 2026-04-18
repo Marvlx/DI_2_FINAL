@@ -9,6 +9,13 @@
   --color-text: #000000;
   --color-text-muted: #7f7f7f;
   --color-brand: #3b82f6;
+  --text-title-lg: 30px;
+  --text-title-md: 22px;
+  --text-body: 14px;
+  --text-caption: 12px;
+  --text-button: 18px;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --button-hover-shadow: 0 10px 24px -16px rgba(15, 23, 42, 0.45);
 }
 
 * {
@@ -24,8 +31,40 @@ body,
 
 body {
   margin: 0;
-  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.4;
   color: var(--color-text);
   background:
     radial-gradient(circle at 0% 0%, #ffffff 0%, #f3f3f3 55%, #ececec 100%);
+}
+
+button {
+  font-size: var(--text-button);
+  font-weight: 700;
+  line-height: 1.1;
+  transition:
+    transform 220ms var(--motion-ease),
+    box-shadow 220ms var(--motion-ease),
+    filter 220ms var(--motion-ease),
+    background-color 220ms var(--motion-ease),
+    border-color 220ms var(--motion-ease),
+    color 220ms var(--motion-ease),
+    opacity 220ms var(--motion-ease);
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+
+  button[class*="bg-"]:not(:disabled):hover {
+    box-shadow: var(--button-hover-shadow);
+    filter: saturate(1.04);
+  }
+}
+
+button:not(:disabled):active {
+  transform: scale(0.985);
 }

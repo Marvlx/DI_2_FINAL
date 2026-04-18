@@ -4,7 +4,7 @@ export default function Navbar({ title, leftContent, rightContent }) {
       <div className="absolute left-5 top-1/2 -translate-y-1/2">
         {leftContent}
       </div>
-      <h1 className="text-lg font-bold text-[var(--color-text)]">{title}</h1>
+      <h1 className="text-[18px] leading-none font-bold text-[var(--color-text)]">{title}</h1>
       <div className="absolute right-5 top-1/2 -translate-y-1/2">
         {rightContent}
       </div>

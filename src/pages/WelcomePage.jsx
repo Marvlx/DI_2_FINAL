@@ -9,7 +9,7 @@ export default function WelcomePage({ onStart }) {
           alt="CarsRent logo"
           className="size-16 rounded-full object-contain"
         />
-        <h1 className="mt-8 text-4xl font-semibold leading-[1.02]">
+        <h1 className="mt-8 text-[50px] font-bold leading-[1.02]">
           Bienvenidos a
           <br />
           RentCars
@@ -19,7 +19,7 @@ export default function WelcomePage({ onStart }) {
       <button
         type="button"
         onClick={onStart}
-        className="mb-6 h-14 rounded-full bg-[#1f2a30] text-base font-semibold"
+        className="mb-6 h-14 rounded-full bg-[#1f2a30] text-[18px] font-bold"
       >
         Inicio
       </button>

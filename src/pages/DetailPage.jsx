@@ -1,6 +1,4 @@
-import Navbar from '../components/layout/Navbar'
-import BackIcon from '../components/shared/BackIcon'
-import DotMenu from '../components/shared/DotMenu'
+import AppHeader from '../components/shared/AppHeader'
 import starIcon from '../assets/star.svg'
 import iconVerificado from '../assets/icon_verificado.svg'
 import iconCapacidad from '../assets/icon_capacidad.svg'
@@ -80,26 +78,7 @@ export default function DetailPage({ selectedCar, onBack, onReserveNow }) {
 
   return (
     <>
-      <Navbar
-        title="Detalles del auto"
-        leftContent={
-          <button
-            type="button"
-            onClick={onBack}
-            className="grid size-10 place-content-center rounded-full border border-[#d0d0d0] bg-white"
-          >
-            <BackIcon />
-          </button>
-        }
-        rightContent={
-          <button
-            type="button"
-            className="grid size-10 place-content-center rounded-full border border-[#d0d0d0] bg-white"
-          >
-            <DotMenu />
-          </button>
-        }
-      />
+      <AppHeader title="Detalles del auto" onBack={onBack} />
 
       <section className="flex flex-1 flex-col overflow-y-auto p-4 pb-5">
         <div className="relative rounded-2xl bg-[#ececec] pb-3 pt-2">
@@ -193,7 +172,7 @@ export default function DetailPage({ selectedCar, onBack, onReserveNow }) {
         <button
           type="button"
           onClick={onReserveNow}
-          className="mt-6 h-14 w-full rounded-full bg-[#1f2a30] text-xl font-semibold text-white"
+          className="mt-6 h-14 w-full rounded-full bg-[#1f2a30] text-[18px] font-bold text-white"
         >
           Reserva ahora
         </button>
